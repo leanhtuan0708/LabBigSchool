@@ -110,3 +110,4 @@ C:\Users\Admin\OneDrive\Máy tính\THWEB\LabBigSchool\LabBigSchool\obj\Debug\Lab
 C:\Users\Admin\OneDrive\Máy tính\THWEB\LabBigSchool\LabBigSchool\obj\Debug\LabBigSchool.csproj.CopyComplete
 C:\Users\Admin\OneDrive\Máy tính\THWEB\LabBigSchool\LabBigSchool\obj\Debug\LabBigSchool.dll
 C:\Users\Admin\OneDrive\Máy tính\THWEB\LabBigSchool\LabBigSchool\obj\Debug\LabBigSchool.pdb
+C:\Users\Admin\OneDrive\Máy tính\THWEB\LabBigSchool\LabBigSchool\obj\Debug\LabBigSchool.csproj.AssemblyReference.cache

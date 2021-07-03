@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace LabBigSchool.Controllers
 {
@@ -35,6 +37,19 @@ namespace LabBigSchool.Controllers
                 viewModel.Categories = _dbContext.Categories.ToList();
                 return View("Create", viewModel);
             }
+            //try
+            //{
+            //    var course = _dbContext.Courses.Select(p => p).Where(p => p.Place == viewModel.Place).FirstOrDefault();
+            //    course.Place = viewModel.Place;
+            //    course.DateTime = viewModel.GetDateTime();
+            //    course.CategoryId = viewModel.Category;
+            //    _dbContext.SaveChanges();
+            //    return RedirectToAction("Index", "Home");
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
             var course = new Course
             {
                 LecturerId = User.Identity.GetUserId(),
