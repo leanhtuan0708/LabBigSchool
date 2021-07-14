@@ -21,7 +21,7 @@ namespace LabBigSchool.Controllers
         //GET:Courses
         public ActionResult Create()
         {
-            var viewModel = new CoursesViewModel()
+            var viewModel = new CourseViewModel()
             {
                 Categories = _dbContext.Categories.ToList()
             };
@@ -30,7 +30,7 @@ namespace LabBigSchool.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CoursesViewModel viewModel)
+        public ActionResult Create(CourseViewModel viewModel)
         {
             if (!ModelState.IsValid) 
             {
@@ -60,6 +60,23 @@ namespace LabBigSchool.Controllers
             _dbContext.Courses.Add(course);
             _dbContext.SaveChanges();
             return RedirectToAction("Index", "Home");
+        }
+        [Authorize]
+        public ActionResult Attending()
+        {
+            var userId = User.Identity.GetUserId();
+            var courses = _dbContext.Attendances
+                .Where(a => a.AttendeeId == userId)
+                .Select(a => a.Course)
+                .Include(l => l.Lecturer)
+                .Include(l => l.Category)
+                .ToList();
+            var ViewModel = new CoursesViewModel
+            {
+                UpcommingCourses = courses,
+                ShowAction = User.Identity.IsAuthenticated
+            };
+            return View(ViewModel);
         }
     }
 }
