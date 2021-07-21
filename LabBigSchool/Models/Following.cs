@@ -9,6 +9,7 @@ namespace LabBigSchool.Models
 {
     public class Following
     {
+
         [Key]
         [Column(Order = 1)]
         public string FollowerId { get; set; }
@@ -19,5 +20,6 @@ namespace LabBigSchool.Models
 
         public ApplicationUser Follower { get; set; }
         public ApplicationUser Followee { get; set; }
+
     }
 }

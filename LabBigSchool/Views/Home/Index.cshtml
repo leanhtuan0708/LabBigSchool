@@ -1,5 +1,7 @@
 ﻿
 @model LabBigSchool.ViewModels.CoursesViewModel
+@using Microsoft.AspNet.Identity;
+@using LabBigSchool.Models;
 @{
     ViewBag.Title = "Home Page";
 }
@@ -21,7 +23,20 @@
                     @course.Lecturer.Name
                     @if (Model.ShowAction)
                     {
-                        <button class="btn btn-default btn-sm js-toggle-follow" data-user-id="@course.LecturerId">Follow</button>
+                        var User_ID = User.Identity.GetUserId();
+                        ApplicationDbContext _dbContext = new ApplicationDbContext();
+                        ApplicationUser a = new ApplicationUser();
+                        bool isfollow = _dbContext.Followings.Any(f => f.FollowerId == a.Id && f.FollowerId == User_ID);
+
+                        if (isfollow)
+                        {
+                            <button data-course-id="@course.Id" class="btn btn-info btn-sm js-toggle-follow">Following</button>
+                        }
+                        else
+                        {
+                            <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-follow">Follow</button>
+                        }
+
                     }
                 </span><br />
                 <span class="category">
@@ -29,7 +44,19 @@
                 </span>
                 @if (Model.ShowAction)
                 {
-                    <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance" >Going?</button>
+                    var User_ID = User.Identity.GetUserId();
+                    ApplicationDbContext _dbContext = new ApplicationDbContext();
+                    bool isGoing = _dbContext.Attendances.Any(a => a.CourseId == course.Id && a.AttendeeId == User_ID);
+
+                    if (isGoing)
+                    {
+                        <button data-course-id="@course.Id" class="btn btn-info btn-sm js-toggle-attendance">Going</button>
+                    }
+                    else
+                    {
+                        <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
+                    }
+
                 }
             </div>
         </li>
@@ -40,6 +67,7 @@
     <script>
         $(document).ready(function () {
             $(".js-toggle-attendance").click(function (e) {
+                e.preventDefault();
                 var button = $(e.target);
                 $.post("/api/attendances", { courseId: button.attr("data-course-id") })
                     .done(function () {
@@ -47,6 +75,7 @@
                             .removeClass("btn-default")
                             .addClass("btn-info")
                             .text("Going");
+
                     })
                     .fail(function () {
                         alert("Something failed!");
@@ -62,7 +91,7 @@
                     .fail(function () {
                         alert("Something failed");
                     });
-             });
+            });
         });
     </script>
 }

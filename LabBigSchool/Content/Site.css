@@ -44,6 +44,14 @@ textarea {
             top: 0;
             left: 70px;
         }
+        .course > li .action{
+            display:none;
+            left: 80px;
+            position:absolute;
+        }
+        .course > li:hover .action{
+            display:block;
+        }
 
 .navbar-inverse {
     background-color: #d41d50;

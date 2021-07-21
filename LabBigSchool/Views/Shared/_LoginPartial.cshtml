@@ -11,6 +11,7 @@
                aria-expanded="false"><b>User:</b>@User.Identity.GetUserName()<span class="caret"></span></a>
 
             <ul class="dropdown-menu">
+                <li><a href="@Url.Action("Mine","Courses")">My Upcoming Courses</a></li>
                 <li><a href="@Url.Action("Attending","Courses")">Courses I'm Going</a></li>
                 <li><a href="@Url.Action("Following","Courses")">Lecture I'm Flowing</a></li>
                 <li role="separator" class="divider"></li>

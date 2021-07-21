@@ -1,30 +1,50 @@
-﻿@model LabBigSchool.ViewModels.CoursesViewModel
+﻿@model IEnumerable<LabBigSchool.Models.ApplicationUser>
+
+
 @{
     ViewBag.Title = "Following";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Following</h2>
-<ul class="course">
-    @foreach (var course in Model.UpcommingCourses)
+<h2>Lecture I'm Flowing</h2>
+
+<ul>
+
+    @foreach (var viewModel in Model)
     {
         <li>
-            <div class="data">
-                <div class="month">
-                    @course.DateTime.ToString("MM")
-                </div>
-                <div class="day">
-                    @course.DateTime.ToString("dd")
-                </div>
-            </div>
-            <div class="details">
-                <span class=" lecturer">
-                    @course.Lecturer.Name
-                </span><br />
-                <span class="category">
-                    @course.Category.Name
-                </span>
-            </div>
+            <span style="font-weight:bold">@viewModel.Name</span>
+            <button class="btn btn-info btn-sm js-toggle-follow" data-user-id="@viewModel.Id">
+                Following
+            </button>
+            <br />
+            <br />
         </li>
+
     }
 </ul>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".js-toggle-follow").click(function (e) {
+                var button = $(e.target);
+                if (button.hasClass("btn-default")) {
+                    $.post("/api/followings", { followeeId: button.attr("data-user-id") })
+                        .done(function () {
+                            button
+                                .removeClass("btn-default")
+                                .addClass("btn-info")
+                                .text("Following");
+                        })
+                        .fail(function () {
+                            alert("Something failed!");
+                        });
+                }
+
+            });
+        });
+
+    </script>
+}
